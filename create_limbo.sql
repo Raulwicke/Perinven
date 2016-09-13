@@ -5,4 +5,8 @@ drop database if exists limbo_db ;
 create database limbo_db ;
 use limbo_db ;
 
-CREATE stuff 
+CREATE TABLE IF NOT EXISTS stuff (
+id INT UNSIGNED NOT NULL,
+desr VARCHAR(60) NOT NULL
+PRIMARY KEY (id) );
+
