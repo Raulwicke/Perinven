@@ -6,7 +6,10 @@ create database limbo_db ;
 use limbo_db ;
 
 CREATE TABLE IF NOT EXISTS stuff (
-id INT UNSIGNED NOT NULL,
-desr VARCHAR(60) NOT NULL
-PRIMARY KEY (id) );
+id INT,
+description TEXT,
+fid int,
+locid int, 
+retrieved BOOLEAN NOT NULL DEFAULT 0,
 
+PRIMARY KEY (id) );
