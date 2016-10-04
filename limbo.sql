@@ -1,6 +1,6 @@
 /*The goal is to create and populate a database for Limbo
-Authors: Claudia Rojas, Nicholas Bradford, Colin May
-Version: 1.1
+  Authors: Claudia Rojas, Nicholas Bradford, Colin May
+  Version: 1.0
 */
 
 Drop database if exists limbo_db;
@@ -17,14 +17,13 @@ Create table if not exists users(
 	reg_date DATETIME NOT NULL,
 	PRIMARY KEY (user_id),
 	UNIQUE (email)
-
-
 );
 /*To show the users table after it is created*/
 explain users;
 
-INSERT INTO users(first_name,last_name,email ,pass)
-	VALUES('Sam', 'Jones', 'sam_jones1@gmail.com','gaze11e');
+
+INSERT INTO users(first_name,last_name,email ,pass, reg_date)
+	VALUES('admin', '', 'N/A','gaze11e', now());
 /*Show user*/
 select *
 from users;
@@ -47,6 +46,7 @@ Create table if not exists stuff(
 explain stuff;
 
 
+
 Drop table if exists locations;
 Create table if not exists locations(
 	id INT primary key auto_increment,
@@ -54,39 +54,43 @@ Create table if not exists locations(
 	update_date DATETIME NOT NULL,
 	name TEXT NOT NULL
 );
-
 /*Show the table to make sure it is correct*/
 explain locations;
 
-INSERT INTO locations(name)
-	VALUES('Hancock'),
-	      ('Dyson'),
-	      ('Lowell Thomas'),
-	      ('Fontaine'),
-	      ('Bryne House'),
-	      ('Library'),
-	      ('Champagnat Hall'),
-	      ('Leo Hall'),
-	      ('Chapel'),
-	      ('Cornell Boathouse'),
-	      ('Donnely Hall'),
-	      ('Foy'),
-	      ('Lower Fulton'),
-	      ('Upper Fulton'),
-	      ('Greystone Hall'),
-	      ('Kirk House'),
-	      ('McCann Center'),
-	      ('Longview Park'),
-	      ('Lower Townhouses'),
-	      ('Marian Hall'),
-	      ('Marist Boathouse'),
-	      ('MidRise'),
-	      ('North Campus Housing Complex'),
-	      ('Allied Health'),
-	      ('Sheahan'),
-	      ('Student Center'),
-	      ('Upper West Cedar'),
-	      ('Lower West Cedar');
+
+INSERT INTO locations(name,create_date, update_date)
+	VALUES('Hancock',now(),now()),
+	      ('Dyson',now(),now()),
+	      ('Lowell Thomas',now(),now()),
+	      ('Fontaine',now(),now()),
+	      ('Bryne House',now(),now()),
+	      ('Library',now(),now()),
+	      ('Champagnat Hall',now(),now()),
+	      ('Leo Hall',now(),now()),
+	      ('Chapel',now(),now()),
+	      ('Cornell Boathouse',now(),now()),
+	      ('Donnely Hall',now(),now()),
+	      ('Foy',now(),now()),
+	      ('Lower Fulton',now(),now()),
+	      ('Upper Fulton',now(),now()),
+	      ('Greystone Hall',now(),now()),
+	      ('Kirk House',now(),now()),
+	      ('McCann Center',now(),now()),
+	      ('Longview Park',now(),now()),
+	      ('Kieran Gatehouse',now(),now()),
+	      ('St Anne\'s Hermitage',now(),now()),
+	      ('St Peter\'s',now(),now()),
+	      ('Lower Townhouses',now(),now()),
+	      ('Marian Hall',now(),now()),
+	      ('Marist Boathouse',now(),now()),
+	      ('MidRise',now(),now()),
+	      ('North Campus Housing Complex',now(),now()),
+	      ('Steel Plant',now(),now()),
+	      ('Allied Health',now(),now()),
+	      ('Sheahan',now(),now()),
+	      ('Student Center',now(),now()),
+	      ('Upper West Cedar',now(),now()),
+	      ('Lower West Cedar',now(),now());
 /*To show the locations table after it is created*/
 SELECT *
 FROM locations;
