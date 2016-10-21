@@ -1,8 +1,4 @@
-/*
-Authors: Claudia Rojas, Colin May, Nicholas Bradford
-*/
-
-
+<!--Authors: Claudia Rojas, Colin May, Nicholas Bradford-->
 <?php
 $debug = true;
 
@@ -51,6 +47,16 @@ function insert_record($dbc, $number, $fname, $lname) {
   $query = 'INSERT INTO presidents(number, fname, lname) VALUES (' . $number . ' , "' . $fname . '" , "' . $lname . '")' ;
   show_query($query);
 
+   #Checks the query if the number, fnam, and lname is valid
+if (!valid_number($number))
+	echo '<p>Please give a valid number.</p>';
+else if (!valid_name($fname))
+	echo '<p>Please complete the first name.</p>';
+else if (!valid_name($lname))
+	echo '<p>Please complete the last name.</p>';
+else insert_record($dbc,$number,$fname,$lname) ; 
+  
+  
   $results = mysqli_query($dbc,$query) ;
   check_results($results) ;
 
@@ -73,30 +79,21 @@ function check_results($results) {
     echo '<p>SQL ERROR = ' . mysqli_error( $dbc ) . '</p>'  ;
 }
 
-
 #Checks the query if the number is valid
-function valid_number($number){
-	if(empty($number) || !is_numeric($number))
-		return false;
-	else{
-		$number = intval($number);
+function valid_number($number) {
+if(empty($number) || !is_numeric($number))
+	return false;
+else {
+	$number = intval($number) ;
 		if($number <= 0)
-			return false;
-	}
+			return false ;
+		}
+	return true ;
+}
+	
+function valid_name($name){
+	if (empty($name))
+		return false;
 	return true;
 	}
-	
-#Checks the query if the name is valid
-if(!valid_number($number))
-echo '<p>Please give a valid number.</p>';
-else if (!valid_name($fname))
-echo '<p>Please complete the first name.</p>';
-else if (!valid_name($lname))
-echo '<p>Please complete the last name.</p>';
-else insert_record($dbc,$number,$fname,$lname) ;
-
-
-
-
-
 ?>

@@ -3,13 +3,13 @@
 <html>
   <head>
     <meta http-equiv="Content-Style-Type" content="text/css" /> 
-    <title>iprints.php</title>
+    <title>vipresidents.php</title>
     <link href="/library/skin/tool_base.css" type="text/css" rel="stylesheet" media="all" />
     <link href="/library/skin/morpheus-default/tool.css" type="text/css" rel="stylesheet" media="all" />
     <script type="text/javascript" language="JavaScript" src="/library/js/headscripts.js"></script>
     <style>body { padding: 5px !important; }</style>
   </head>
-  <body>
+<body>
 <!--
 This PHP script was modified based on result.php in McGrath (2012).
 It demonstrates how to ...
@@ -20,50 +20,52 @@ It demonstrates how to ...
 By Ron Coleman
 -->
 <!DOCTYPE html>
-<html>
-<?php
-# Connect to MySQL server and the database
-require( 'includes/connect_db.php' ) ;
+	<html>
+	<?php
+	# Connect to MySQL server and the database
+	require( 'includes/connect_db.php' ) ;
 
-# Includes these helper functions
-require( 'includes/helpers.php' ) ;
+	# Includes these helper functions
+	require( 'includes/helpers.php' ) ;
 
-if ($_SERVER[ 'REQUEST_METHOD' ] == 'POST') {
-	$number = $_POST['number'] ;
-        $fname = $_POST['fname'] ;
-	$lname =$_POST['lname'];
+	if ($_SERVER[ 'REQUEST_METHOD' ] == 'POST') {
+		$number = $_POST['number'] ;
+			$fname = $_POST['fname'] ;
+		$lname =$_POST['lname'];
 
-    if(!empty($number) && !empty($fname) && !empty($lname)) {
-      $result = insert_record($dbc, $number, $fname, $lname) ;
+	   /*if(!empty($number) && !empty($fname) && !empty($lname)) {
+		  $result = insert_record($dbc, $number, $fname, $lname) ;
+		  echo "<p>Added " . $result . " new print(s) ". $number . " @ $" . $fname . " $" . $lname . ".</p>" ;*/
+		 if(empty($number) && empty($fname) && empty($lname))
+			echo '<p style="color:red;font-size:16px;">Please input a President\'s number, first and last name!!!</p>';
+		else if(!valid_number($number))
+			echo '<p style="color:red;font-size:16px;">ERROR! Please input a President\'s number, first and last name!!!</p>';
+		else if(!valid_name($fname))
+			echo '<p style="color:red;font-size:16px;">ERROR! Please input a President\'s number, first and last name!!!</p>';
+		else if(!valid_name($lname))
+			echo '<p style="color:red;font-size:16px;">ERROR! Please input a President\'s number, first and last name!!!!</p>';
+		}
+	#Show the records
+	show_records($dbc);
 
-      #echo "<p>Added " . $result . " new print(s) ". $number . " @ $" . $fname . " $" . $lname . ".</p>" ;
-    }
-    else
-      echo '<p style="color:red">Please input a President\'s number, first and last name!</p>' ;
-}
+	#Close the connection
+	mysqli_close( $dbc ) ;
+	?>
 
-#Show the records
-show_records($dbc);
-
-#Close the connection
-mysqli_close( $dbc ) ;
-?>
-
-<!-- Get inputs from the user. -->
-<form action="ipresidents.php" method="POST">
-<table>
-<tr>
-<td>Number:</td><td><input type="text" name="number"></td>
-</tr>
-<tr>
-<td>First Name:</td><td><input type="text" name="fname"></td>
-</tr>
-<tr>
-<td>Last Name:</td><td><input type="text" name="lname"></td>
-</tr>
-</table>
-<p><input type="submit" ></p>
-</form>
-</html>
-  </body>
-</html>
+	<!-- Get inputs from the user. -->
+		<form action="vipresidents.php" method="POST">
+		<table>
+		<tr>
+		<td>Number:</td><td><input type="text" name="number"></td>
+		</tr>
+		<tr>
+		<td>First Name:</td><td><input type="text" name="fname"></td>
+		</tr>
+		<tr>
+		<td>Last Name:</td><td><input type="text" name="lname"></td>
+		</tr>
+		</table>
+		<p><input type="submit" ></p>
+		</form>
+	</html>
+</body>
