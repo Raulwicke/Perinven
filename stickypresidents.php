@@ -26,42 +26,72 @@ By Ron Coleman
 require( 'includes/connect_db.php' ) ;
 # Includes these helper functions
 require( 'includes/helpers.php' ) ;
-if ($_SERVER[ 'REQUEST_METHOD' ] == 'POST') {
-	$number = $_POST['number'] ;
-        $fname = $_POST['fname'] ;
-	$lname =$_POST['lname'];
-    if(empty($number) && empty($fname) && empty($lname))
-        echo '<p style="color:red;font-size:16px;">Please complete all of the fields.</p>';
-    else if (!valid_number($number))
-        echo '<p style="color:red;font-size:16px;">Please complete or give a valid number.</p>';
-    else if (!valid_name($fname))
-        echo '<p style="color:red;font-size:16px;">Please complete the first name.</p>';
-    else if (!valid_name($lname))
-        echo '<p style="color:red;font-size:16px;">Please complete the last name.</p>';
-    else 
-        $result = insert_record($dbc, $number, $fname, $lname) ;
+
+if ( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' ) {
+  $number = "" ;
+  $fname = "" ;
+  $lname = "" ;
+}
+
+# Otherwise, user submitted the form, so let's validate
+else if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
+{
+  # Initialize an error array.
+  $errors = array();
+
+  $number = $_POST[ 'number' ] ;
+  $fname = $_POST[ 'fname' ] ;
+  $lname = $_POST[ 'lname' ] ;
+
+  # Check for a name & email address.
+  if ( !valid_number($number ) )  {
+  	$errors[] = 'Number' ;
+  }
+  else {
+  	$number = trim( $number )  ;
+  }
+
+  if ( empty( $_POST[ 'fname' ] ) ) {
+  	$errors[] = 'First Name' ;
+  }
+  else {
+  	$fname = trim( $fname )  ;
+  }
+
+if ( empty( $_POST[ 'lname' ] ) ) {
+  	$errors[] = 'Last Name' ;
+  }
+  else {
+  	$lname = trim( $lname )  ;
+  }
+  # Report result.
+  if( !empty( $errors ) )
+  {
+
+    echo '<p>Error! Please enter a valid  ' ;
+    foreach ( $errors as $field ) { echo " - $field " ; }
+
+  }
+  else {
+  	echo "<p>Success! </p>" ;
+    $result = insert_record($dbc, $number, $fname, $lname) ;
+  }
 }
 #Show the records
 show_records($dbc);
 #Close the connection
 mysqli_close( $dbc ) ;
-?>
+# Show the input form with whatever we got for fields
+show_form($number,$fname,$lname) ;
 
-<!-- Get inputs from the user. -->
-<form action="stickypresidents.php" method="POST">
-<table>
-<tr>
-<td>Number:</td><td><input type="text" name="number"></td>
-</tr>
-<tr>
-<td>First Name:</td><td><input type="text" name="fname"></td>
-</tr>
-<tr>
-<td>Last Name:</td><td><input type="text" name="lname"></td>
-</tr>
-</table>
-<p><input type="submit" ></p>
-</form>
-</html>
-  </body>
+# Shows the input form
+function show_form($number,$fname,$lname) {
+  echo '<form action="stickypresidents.php" method="POST">' ;
+  echo '<p>Number: <input type="text" name="number" value="' . $number . '"> </p> ' ;
+  echo '<p>First Name: <input type="text" name="fname" value="' . $fname . '"></p>' ;
+  echo '<p>Last Name: <input type="text" name="lname" value="' . $lname . '"></p>' ;
+  echo '<p><input type="submit"></p>' ;
+  echo '</form>' ;
+}
+?>
 </html>
