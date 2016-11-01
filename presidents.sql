@@ -10,7 +10,7 @@ Create table if not exists presidents(
 	id INT primary key auto_increment,
 	fName TEXT NOT NULL,
 	lName TEXT NOT NULL,
-	number INT NOT NULL,
+	number INT unique NOT NULL,
 	dob DATETIME 
 );
 
