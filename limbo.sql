@@ -49,7 +49,7 @@ explain stuff;
 
 Drop table if exists locations;
 Create table if not exists locations(
-	id INT primary key auto_increment,
+	location_id INT primary key auto_increment,
 	create_date DATETIME NOT NULL,
 	update_date DATETIME NOT NULL,
 	name TEXT NOT NULL
@@ -94,3 +94,13 @@ INSERT INTO locations(name,create_date, update_date)
 /*To show the locations table after it is created*/
 SELECT *
 FROM locations;
+
+INSERT INTO stuff(location_id,description,create_date,update_date,room,owner,finder,status)
+    VALUES(1,"Red Leather Purse",now(),now(),"004",NULL,"Colin May","found"),
+          (3,"Backpack",now(),now(),"225",NULL,"Harry Potter","found"),
+          (27,"Baseball Cap",now(),now(),"307",NULL,"James Bond","found"),
+          (4,"Cell phone",now(),now(),"132","Donald Duck",NULL,"lost"),
+          (6,"Wallet with $200",now(),now(),"212","SpongeBob Square Pants",NULL,"lost"),
+          (30,"Jacket",now(),now(),"103","Bugs Bunny",NULL,"lost");
+SELECT location_id, description,room,owner,finder,status
+FROM stuff;
