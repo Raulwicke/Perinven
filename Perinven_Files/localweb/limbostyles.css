@@ -1,4 +1,16 @@
 body{
 	font-family:"Times New Roman", Times, sans-serif;
 	padding: 5px !important; 
+    background: #c8102e; 
+}
+h1 {
+    font-size: 42pt;
+}
+table,th,td {
+    border: 1px solid black;
+    text-align: center;
+    font-size: 18pt;
+    }
+span{
+    font-size: 16px;
 }

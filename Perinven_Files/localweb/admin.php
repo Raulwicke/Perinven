@@ -7,6 +7,7 @@
 		<link href="/library/skin/morpheus-default/tool.css" type="text/css" rel="stylesheet" media="all" />
         <link href="limbostyles.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" language="JavaScript" src="/library/js/headscripts.js"></script>
+
 		
 	</head>
 	<body>
@@ -22,7 +23,6 @@
 			require( 'includes/helpers_limbo.php' ) ;
 			
 			#Show the records
-			show_records($dbc);
 			#Close the connection
 			mysqli_close( $dbc );
 		?>
