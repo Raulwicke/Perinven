@@ -1,3 +1,7 @@
+
+
+
+
 Drop database if exists limbo_db;
 Create database if not exists limbo_db;
 Use limbo_db;
@@ -97,5 +101,7 @@ INSERT INTO stuff(location_id,description,create_date,update_date,room,owner,fin
           (4,"Cell phone",now(),now(),"132","Donald Duck",NULL,"lost"),
           (6,"Wallet with $200",now(),now(),"212","SpongeBob Square Pants",NULL,"lost"),
           (30,"Jacket",now(),now(),"103","Bugs Bunny",NULL,"lost");
-SELECT location_id, description,room,owner,finder,status
+
+SELECT *
 FROM stuff;
+
