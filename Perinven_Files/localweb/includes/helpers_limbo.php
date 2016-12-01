@@ -128,19 +128,68 @@ function show_lost($dbc){
 	}
 function check_results($results){
 	global $dbc;
+	$arrayName = array('Select Location', );
+
 	if (!$results){
 		echo "<p> SQL ERROR = ". mysqli_error( $dbc ) . '</p>';
 	}
-function show_lost_form($description,$finder,$room) {
-  echo '<form action="addlost.php" method="POST">' ;
-  echo '<p>Description: <input type="text" name="description" value="' . $description . '"> </p> ' ;
-  echo '<p>Finder Name: <input type="text" name="name" value="' . $finder . '"></p>' ;
+}
+function show_lost_form($description,$owner,$locations, $room) 
+{
+	global $dbc;
+  echo '<form action="addLost.php" method="POST">' ;
+
+  echo '<p>Description/Name: <input type="text" name="description" value="' . $description . '"> </p> ' ;
+
+
+  echo '<p>Owner Name: <input type="text" name="name" value="' . $owner . '"></p>' ;
+
+  $sql="SELECT name, location_id FROM locations ORDER BY name";
+  echo '<select name="location" value="">Location</option>';
+	foreach ($dbc->query($sql) as $row){
+		echo "<option value=$row[location_id]>$row[name]</option>";
+	}
+  echo "</select>"; 
+  
   echo '<p>Room: <input type="text" name="room" value="' . $room . '"></p>' ;
 
-  
   echo '<p><input type="submit"></p>' ;
   echo '</form>' ;
 }
+
+
+function insert_lost_record($dbc, $description, $owner, $location, $room) {
+  $status= 'lost';
+  $location_query='SELECT location_id FROM locations WHERE name="' . $location. '"' ;
+  $results2= mysqli_query($dbc,$location_query);
+  $query = 'INSERT INTO stuff(location_id,description,create_date,update_date,room,owner,finder,status) 
+  			VALUES ("' . $results2 . '","' . $description . '" ,now(),now(), "' . $room . '","' . $owner . ' ",Null, "'. $status . '")' ;
+  show_query($query);
+  $results = mysqli_query($dbc,$query) ;
+  check_results($results) ;
+  return $results ;
+}
+
+function show_find_form($description,$finder,$locations, $room) 
+{
+	global $dbc;
+  echo '<form action="addFound.php" method="POST">' ;
+
+  echo '<p>Description/Name: <input type="text" name="description" value="' . $description . '"> </p> ' ;
+
+  echo '<p>Finder Name: <input type="text" name="name" value="' . $finder . '"></p>' ;
+
+  $sql="SELECT name, location_id FROM locations ORDER BY name";
+  echo '<select name="location" value="">Location</option>';
+	foreach ($dbc->query($sql) as $row){
+		echo "<option value=$row[location_id]>$row[name]</option>";
+	}
+  echo "</select>"; 
+  
+  echo '<p>Room: <input type="text" name="room" value="' . $room . '"></p>' ;
+
+  echo '<p><input type="submit"></p>' ;
+  echo '</form>' ;
 }
 
 ?>
