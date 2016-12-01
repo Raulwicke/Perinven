@@ -39,12 +39,13 @@ else if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
 	if(isset($_POST[ 'owner' ]))
 	{
 		$owner= $_POST['owner'];
-		echo $owner;
-		echo "is your name";
 	}
   	$room = $_POST[ 'room' ] ;
   	$locations = $_POST['locations'];
-
+    if(isset($_POST[ 'locations' ]))
+	{
+		$locations= $_POST['locations'];
+	}
   # Check for a name & email address.
   if ( empty($_POST['description'] ))  {
   	$errors[] = 'Description' ;
@@ -82,7 +83,7 @@ else if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
   }
   else {
   	echo "<p>Success! </p>" ;
-    $result = insert_record($dbc, $description , $owner, $locations, $room) ;
+    $result = insert_lost_record($dbc, $description , $owner, $locations, $room) ;
   }
 }
 

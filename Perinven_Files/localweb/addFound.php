@@ -12,25 +12,85 @@
 	<body>
         <div class="menu">
             <?php include 'menu.php';?>
-            <p>If you found something report it here.</p>
+            <p>If you lost something report it here.</p>
         </div>
-		<?php
-			# Create a query to get the number, fname, lname sorted by number
-			# Connect to MySQL server and the database
-			require( 'includes/connect_limbo.php' ) ;
-			# Includes these helper functions
-			require( 'includes/helpers_limbo.php' ) ;
-			if ( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' ) {
-			  $description = "" ;
-			  $finder = "" ;
-			  $room = "" ;
-			  $location = "" ;
-			}
+<!DOCTYPE html>
+<html>
+<?php
+	# Create a query to get the number, fname, lname sorted by number
+	# Connect to MySQL server and the database
+	require( 'includes/connect_limbo.php' ) ;
+	# Includes these helper functions
+	require( 'includes/helpers_limbo.php' ) ;
+	if ( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' ) {
+	  $description = "" ;
+	  $finder = "" ;
+	  $room = "" ;
+	  $locations ="";
 
-			#Show the records
-			show_find_form($description, $finder, $location, $room);
-			#Close the connection
-			mysqli_close( $dbc );
-		?>
+	}
+  
+else if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
+{
+  # Initialize an error array.
+  $errors = array();
+
+    $description = $_POST[ 'description' ] ;
+	if(isset($_POST[ 'finder' ]))
+	{
+		$finder= $_POST['finder'];
+	}
+  	$room = $_POST[ 'room' ] ;
+    if(isset($_POST[ 'locations' ]))
+	{
+		$locations= $_POST['locations'];
+	}
+  # Check for a name & email address.
+  if ( empty($_POST['description'] ))  {
+  	$errors[] = 'Description' ;
+  }
+  else {
+  	$description = trim( $description )  ;
+  }
+
+  if ( empty( $_POST[ 'finder' ] ) ) {
+  	$errors[] = 'Finder Name' ;
+  }
+  else {
+  	$finder = trim( $finder )  ;
+  }
+
+  if ( empty( $_POST[ 'room' ] ) ) {
+  	$errors[] = 'Room' ;
+  }
+  else {
+  	$room = trim( $room )  ;
+  }
+  if ( empty( $_POST[ 'locations' ] ) ) {
+  	$errors[] = 'Locations' ;
+  }
+  else {
+  	$locations = trim( $locations )  ;
+  }
+  # Report result.
+  if( !empty( $errors ) )
+  {
+
+    echo '<p>Error! Please enter a valid  ' ;
+    foreach ( $errors as $field ) { echo " - $field " ; }
+
+  }
+  else {
+  	echo "<p>Success! </p>" ;
+    $result = insert_found_record($dbc, $description , $finder, $locations, $room) ;
+  }
+}
+
+# Show the input form with whatever we got for fields
+show_found_form($description, $finder, $locations, $room) ;
+#Close the connection
+mysqli_close( $dbc ) ;
+
+?>
 	</body>
 </html>
