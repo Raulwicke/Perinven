@@ -12,7 +12,7 @@
 	<body>
         <div class="menu">
             <?php include 'menu.php';?>
-            <p>If you lost something report it here.</p>
+            <p>If you found something report it here.</p>
         </div>
 		<?php
 			# Create a query to get the number, fname, lname sorted by number
@@ -22,16 +22,13 @@
 			require( 'includes/helpers_limbo.php' ) ;
 			if ( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' ) {
 			  $description = "" ;
-			  $owner = "" ;
+			  $finder = "" ;
 			  $room = "" ;
-			  $locations ="";
+			  $location = "" ;
 			}
-			else {
-  				echo "<p>Success! </p>" ;
-    			$result = insert_lost_record($dbc, $description, $owner, $locations, $room) ;
-  }
+
 			#Show the records
-			show_lost_form($description, $owner, $locations, $room);
+			show_find_form($description, $finder, $location, $room);
 			#Close the connection
 			mysqli_close( $dbc );
 		?>
