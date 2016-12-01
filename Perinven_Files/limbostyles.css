@@ -1,0 +1,20 @@
+/*Authors: Claudia Rojas, Colin May, Nicholas Bradford*/
+
+
+body{
+	font-family:"Times New Roman", Times, sans-serif;
+	padding: 5px !important; 
+    background: #62c3e0; 
+}
+h1 {
+    font-size: 42pt;
+}
+table,th,td {
+    border: 1px solid black;
+    text-align: center;
+    font-size: 18pt;
+    background: white;
+    }
+span{
+    font-size: 16px;
+}
