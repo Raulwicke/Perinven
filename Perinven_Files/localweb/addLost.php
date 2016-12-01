@@ -14,26 +14,83 @@
             <?php include 'menu.php';?>
             <p>If you lost something report it here.</p>
         </div>
-		<?php
-			# Create a query to get the number, fname, lname sorted by number
-			# Connect to MySQL server and the database
-			require( 'includes/connect_limbo.php' ) ;
-			# Includes these helper functions
-			require( 'includes/helpers_limbo.php' ) ;
-			if ( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' ) {
-			  $description = "" ;
-			  $owner = "" ;
-			  $room = "" ;
-			  $locations ="";
-			}
-			else {
-  				echo "<p>Success! </p>" ;
-    			$result = insert_lost_record($dbc, $description, $owner, $locations, $room) ;
+<!DOCTYPE html>
+<html>
+<?php
+	# Create a query to get the number, fname, lname sorted by number
+	# Connect to MySQL server and the database
+	require( 'includes/connect_limbo.php' ) ;
+	# Includes these helper functions
+	require( 'includes/helpers_limbo.php' ) ;
+	if ( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' ) {
+	  $description = "" ;
+	  $owner = "" ;
+	  $room = "" ;
+	  $locations ="";
+
+	}
+  
+else if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
+{
+  # Initialize an error array.
+  $errors = array();
+
+    $description = $_POST[ 'description' ] ;
+	if(isset($_POST[ 'owner' ]))
+	{
+		$owner= $_POST['owner'];
+		echo $owner;
+		echo "is your name";
+	}
+  	$room = $_POST[ 'room' ] ;
+  	$locations = $_POST['locations'];
+
+  # Check for a name & email address.
+  if ( empty($_POST['description'] ))  {
+  	$errors[] = 'Description' ;
   }
-			#Show the records
-			show_lost_form($description, $owner, $locations, $room);
-			#Close the connection
-			mysqli_close( $dbc );
-		?>
+  else {
+  	$description = trim( $description )  ;
+  }
+
+  if ( empty( $_POST[ 'owner' ] ) ) {
+  	$errors[] = 'Owner Name' ;
+  }
+  else {
+  	$owner = trim( $owner )  ;
+  }
+
+  if ( empty( $_POST[ 'room' ] ) ) {
+  	$errors[] = 'Room' ;
+  }
+  else {
+  	$room = trim( $room )  ;
+  }
+  if ( empty( $_POST[ 'locations' ] ) ) {
+  	$errors[] = 'Locations' ;
+  }
+  else {
+  	$locations = trim( $locations )  ;
+  }
+  # Report result.
+  if( !empty( $errors ) )
+  {
+
+    echo '<p>Error! Please enter a valid  ' ;
+    foreach ( $errors as $field ) { echo " - $field " ; }
+
+  }
+  else {
+  	echo "<p>Success! </p>" ;
+    $result = insert_record($dbc, $description , $owner, $locations, $room) ;
+  }
+}
+
+# Show the input form with whatever we got for fields
+show_lost_form($description, $owner, $locations, $room) ;
+#Close the connection
+mysqli_close( $dbc ) ;
+
+?>
 	</body>
 </html>
