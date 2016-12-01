@@ -43,7 +43,7 @@ function show_records($dbc){
 		}
 	}
 function show_found($dbc){
-		$query = 'SELECT description, stuff.create_date, finder, locations.name
+		$query = 'SELECT stuff.description, stuff.create_date, stuff.finder, locations.name
                   FROM stuff, locations 
                   WHERE status = "found" AND
                   locations.location_id = stuff.location_id
@@ -142,10 +142,10 @@ function show_lost_form($description,$owner,$locations, $room)
   echo '<p>Description/Name: <input type="text" name="description" value="' . $description . '"> </p> ' ;
 
 
-  echo '<p>Owner Name: <input type="text" name="name" value="' . $owner . '"></p>' ;
+  echo '<p>Owner Name: <input type="text" name="owner" value="' . $owner . '"></p>' ;
 
   $sql="SELECT name, location_id FROM locations ORDER BY name";
-  echo '<select name="location" value="">Location</option>';
+  echo '<select name="locations" value="">Location</option>';
 	foreach ($dbc->query($sql) as $row){
 		echo "<option value=$row[location_id]>$row[name]</option>";
 	}
@@ -160,27 +160,33 @@ function show_lost_form($description,$owner,$locations, $room)
 
 function insert_lost_record($dbc, $description, $owner, $location, $room) {
   $status= 'lost';
-  $location_query='SELECT location_id FROM locations WHERE name="' . $location. '"' ;
-  $results2= mysqli_query($dbc,$location_query);
   $query = 'INSERT INTO stuff(location_id,description,create_date,update_date,room,owner,finder,status) 
-  			VALUES ("' . $results2 . '","' . $description . '" ,now(),now(), "' . $room . '","' . $owner . ' ",Null, "'. $status . '")' ;
-  show_query($query);
+  			VALUES ("' . $location . '","' . $description . '" ,now(),now(), "' . $room . '","' . $owner . ' ",Null, "'. $status . '")' ;
+
   $results = mysqli_query($dbc,$query) ;
   check_results($results) ;
   return $results ;
 }
+function insert_found_record($dbc, $description, $finder, $location, $room) {
+  $status= 'found';
+  $query = 'INSERT INTO stuff(location_id,description,create_date,update_date,room,owner,finder,status) 
+  			VALUES ("' . $location . '","' . $description . '" ,now(),now(), "' . $room . '",Null,"' . $finder . ' ","'. $status . '")' ;
 
-function show_find_form($description,$finder,$locations, $room) 
+  $results = mysqli_query($dbc,$query) ;
+  check_results($results) ;
+  return $results ;
+}
+function show_found_form($description,$finder,$locations, $room) 
 {
 	global $dbc;
   echo '<form action="addFound.php" method="POST">' ;
 
   echo '<p>Description/Name: <input type="text" name="description" value="' . $description . '"> </p> ' ;
 
-  echo '<p>Finder Name: <input type="text" name="name" value="' . $finder . '"></p>' ;
+  echo '<p>Finder Name: <input type="text" name="finder" value="' . $finder . '"></p>' ;
 
   $sql="SELECT name, location_id FROM locations ORDER BY name";
-  echo '<select name="location" value="">Location</option>';
+  echo '<select name="locations" value="">Location</option>';
 	foreach ($dbc->query($sql) as $row){
 		echo "<option value=$row[location_id]>$row[name]</option>";
 	}
