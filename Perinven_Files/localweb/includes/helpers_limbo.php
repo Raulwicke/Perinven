@@ -1,4 +1,7 @@
+
+
 <style><?php include "limbostyles.css"; ?></style>
+
 <?php
 $debug = true;
 function show_records($dbc){
@@ -128,6 +131,16 @@ function check_results($results){
 	if (!$results){
 		echo "<p> SQL ERROR = ". mysqli_error( $dbc ) . '</p>';
 	}
+function show_lost_form($description,$finder,$room) {
+  echo '<form action="addlost.php" method="POST">' ;
+  echo '<p>Description: <input type="text" name="description" value="' . $description . '"> </p> ' ;
+  echo '<p>Finder Name: <input type="text" name="name" value="' . $finder . '"></p>' ;
+  echo '<p>Room: <input type="text" name="room" value="' . $room . '"></p>' ;
+
+  
+  echo '<p><input type="submit"></p>' ;
+  echo '</form>' ;
+}
 }
 
 ?>
