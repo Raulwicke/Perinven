@@ -87,7 +87,7 @@ else if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
 }
 
 # Show the input form with whatever we got for fields
-show_found_form($description, $finder, $locations, $room) ;
+show_find_form($description, $finder, $locations, $room) ;
 #Close the connection
 mysqli_close( $dbc ) ;
 
