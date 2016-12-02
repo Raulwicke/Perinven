@@ -24,26 +24,26 @@
                 $login = $_POST['login'] ;
                 $pass = $_POST['pass'] ;
 
-                $check = validate($login, $pass) ;
-
+                $check = validate($dbc,$login, $pass) ;
+                
                 if($check == -1)
                   echo '<P style=color:red>Login failed please try again.</P>' ;
 
                 else
                   load('index.php', $pass);
             }
+    // show_admin_form($login, $pass) ;
 ?>
-        <h1>Presidents login</h1>
+        <h1>Admin login</h1>
 <form action="admin.php" method="POST">
 <table>
 <tr>
 <td>Login:</td><td><input type="text" name="login"></td>
 </tr>
 <tr>
-<td>Password:</td><td><input type="text" name="pass"></td>
+<td>Password:</td><td><input type="password" name="pass"></td>
 </tr>
 </table>
 <p><input type="submit" ></p>
-</form>
-	</body>
-</html>
+
+
