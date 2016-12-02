@@ -4,7 +4,7 @@
 
 <?php
 $debug = true;
-function show_records($dbc, ){
+function show_records($dbc ){
 		$query = 'Select description, create_date, status from stuff order by create_date desc';
 		# Execute the query
 		$results = mysqli_query( $dbc , $query ) ;
