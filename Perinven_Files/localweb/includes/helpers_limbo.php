@@ -162,7 +162,7 @@ function show_find_form($description,$finder,$locations, $room)
 
   echo '<p>Description/Name: <input type="text" name="description" value="' . $description . '"> </p> ' ;
 
-  echo '<p>Finder Name: <input type="text" name="name" value="' . $finder . '"></p>' ;
+  echo '<p>Finder Name: <input type="text" name="finder" value="' . $finder . '"></p>' ;
 
   $sql="SELECT name, location_id FROM locations ORDER BY name";
   echo '<select name="locations" value="">Location</option>';
