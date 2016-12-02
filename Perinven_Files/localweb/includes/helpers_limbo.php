@@ -91,7 +91,7 @@ function show_lost($dbc){
 			echo '<TABLE>';
 			echo '<TR>';
 			echo '<TH>Stuff</TH>';
-			echo '<TH>Finder</TH>'; 
+			echo '<TH>Owner</TH>'; 
 			echo '<TH>Date</TH>';
             echo '<TH>Location</TH>';
 			echo '</TR>';
