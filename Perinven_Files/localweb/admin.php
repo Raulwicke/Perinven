@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -21,13 +18,32 @@
 		<?php
 			# Create a query to get the number, fname, lname sorted by number
 			# Connect to MySQL server and the database
-			require( 'includes/connect_limbo.php' ) ;
-			# Includes these helper functions
-			require( 'includes/helpers_limbo.php' ) ;
-			
-			#Show the records
-			#Close the connection
-			mysqli_close( $dbc );
-		?>
+            require('limbo_login_tools.php');
+           if ($_SERVER[ 'REQUEST_METHOD' ] == 'POST') {
+
+                $login = $_POST['login'] ;
+                $pass = $_POST['pass'] ;
+
+                $check = validate($login, $pass) ;
+
+                if($check == -1)
+                  echo '<P style=color:red>Login failed please try again.</P>' ;
+
+                else
+                  load('index.php', $pass);
+            }
+?>
+        <h1>Presidents login</h1>
+<form action="admin.php" method="POST">
+<table>
+<tr>
+<td>Login:</td><td><input type="text" name="login"></td>
+</tr>
+<tr>
+<td>Password:</td><td><input type="text" name="pass"></td>
+</tr>
+</table>
+<p><input type="submit" ></p>
+</form>
 	</body>
 </html>
